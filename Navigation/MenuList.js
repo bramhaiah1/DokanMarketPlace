@@ -6,81 +6,95 @@ import {
   StyleSheet,
   Image,
   Text,
-  Linking,TouchableOpacity
+  Linking,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+import Feather from "react-native-vector-icons/Feather"
 
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import {colors} from "../Styles/colors/Colors";
-import {width,height} from '../Styles/Dimensions/Dimentions';
+import {colors,width,height,scale} from '../Config/Theme';
+import {  Login} from "./StackNavigation";
 
 const CustomSidebarMenu = (props) => {
  
 
   return (
-    <SafeAreaView style={{ overflow: "hidden" }}>
+    <SafeAreaView style={{flex: 1,backgroundColor:colors.white}}>
+            <AntDesign onPress={()=>props.navigation.goBack()} name='close' style={{alignSelf:"flex-end"}} color={colors.purple} size={30} />
 
-    <View style={{ height: 200, width: width, backgroundColor: colors.activedotcolor, borderBottomLeftRadius: 220, borderBottomRightRadius: 220, right: width / 40 }}>
+      {/*Top Large Image */}
+      <Image
+                source={require("../assets/ProfileAvatar.png")}
+                style={styles.sideMenuProfileIcon}
+      />
+      <View style={{left:10}}>
+        <Text style={{fontWeight:"bold",fontSize:20,marginTop:10}}>Sandra Adams</Text>
+        <Text style={{fontWeight:"bold",fontSize:15,color:colors.ash}}>Sandra_66@gmail.com</Text>
 
-      <View style={{ height: 200, backgroundColor: colors.lightcolor, borderBottomLeftRadius: 180, borderBottomRightRadius: 200, width: width, right: width / 5, elevation: 12 }}>
-        <View style={{ height: 200, backgroundColor: '#0e153d', borderBottomLeftRadius: 200, borderBottomRightRadius: 200, width: width, left: width / 6, elevation: 32 }} /></View>
+      </View>
+      <View style={{borderWidth:0.5,borderColor:colors.ash,marginTop:20}}/>
 
-    </View>
-    <Image style={{ alignSelf: "center", elevation: 77, bottom: 180 }}
-      source={require("../assets/ProfileAvatar.png")}
-    />
-    <Text style={styles.text4}>Fariha Anjum</Text>
-    <Text style={styles.text5}>farihaanjum@gmail.com</Text>
-    <AntDesign onPress={() => props.navigation.goBack()} name="arrowleft" size={35} style={{ color: colors.ash, alignSelf: "flex-end", bottom: 350 }} />
+      <DrawerContentScrollView {...props}>
+        
+        {/* //<DrawerItemList {...props} /> */}
+        <DrawerItem
+          label="Home"
+          icon={() =>
+            <Feather name="home"   color={colors.purple} size={20}/>
 
-    <View style={{ bottom: 150, paddingBottom: height / 50, paddingTop: height / 50 }} >
-      <TouchableOpacity onPress={() => props.navigation.goBack()}>
-        <Text style={{ color: colors.backgroundcolor, fontWeight: "bold", fontSize: 22, left: width / 10 }}><AntDesign name="home" size={25} color={colors.backgroundcolor} /> Home</Text>
-      </TouchableOpacity>
-      <View style={{ borderWidth: 1, borderColor: colors.lightcolor }} />
+          }
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Category')}/>
+         <DrawerItem
+          label="Notification"
+          icon={() =>
+            <Feather name="bell"   color={colors.purple} size={20}/>
 
-    </View>
-    <View style={{ bottom: 150, paddingBottom: height / 50, paddingTop: height / 50 }} >
-      <TouchableOpacity onPress={() => props.navigation.goBack()}>
-        <Text style={{ color: colors.backgroundcolor, fontWeight: "bold", fontSize: 22, left: width / 10 }}><AntDesign name="bells" size={25} color={colors.backgroundcolor} /> Notifications</Text>
-      </TouchableOpacity>
-      <View style={{ borderWidth: 1, borderColor: colors.lightcolor }} />
+          }
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Collection')}/>
 
-    </View>
-    <View style={{ bottom: 150, paddingBottom: height / 50, paddingTop: height / 50 }} >
-      <TouchableOpacity onPress={() => props.navigation.goBack()}>
-        <Text style={{ color: colors.backgroundcolor, fontWeight: "bold", fontSize: 22, left: width / 10 }}> <AntDesign name="infocirlceo" size={25} color={colors.backgroundcolor} /> About Us</Text>
-      </TouchableOpacity>
-      <View style={{ borderWidth: 1, borderColor: colors.lightcolor }} />
+<DrawerItem
+ label="About Us"
+ icon={() =>
+  <AntDesign name="infocirlceo"   color={colors.purple} size={20}
+  />
+ }
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Deal')}/>
 
-    </View>
-    <View style={{ bottom: 150, paddingBottom: height / 50, paddingTop: height / 50 }} >
-      <TouchableOpacity onPress={() => props.navigation.navigate('LoginScreen')}>
-        <Text style={{ color: colors.backgroundcolor, fontWeight: "bold", fontSize: 22, left: width / 10 }}> <FontAwesome5Icon name="sign-in-alt" size={25} color={colors.backgroundcolor} /> Login</Text>
-      </TouchableOpacity>
-      <View style={{ borderWidth: 1, borderColor: colors.lightcolor }} />
 
-    </View>
-  </SafeAreaView>
-);
+         <DrawerItem
+          label="Review"
+          icon={() =>
+            <Feather name="star"   color={colors.purple} size={20}/>
+
+          }
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Reviewscreen')}/>
+
+         <DrawerItem
+          label="Login"
+          icon={() =>
+            <FontAwesome5Icon name="sign-in-alt"   color={colors.purple} size={20}/>
+
+          }
+labelStyle={styles.labelStyle}     onPress={()=>props.navigation.navigate('LoginScreen')}     />
+      </DrawerContentScrollView>
+      
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-    text4: { alignSelf: "center", bottom: 180, elevation: 77, color: colors.lightcolor, fontWeight: "bold", fontSize: 20 },
-    text5: { alignSelf: "center", bottom: 180, elevation: 77, fontWeight: "bold", fontSize: 15, color: colors.white },
-  
   sideMenuProfileIcon: {
   //  resizeMode: 'center',
-    width: width/2,
-    height: height/4,
+    width: 50,
+    height: 50,
+    left:20
     //borderRadius: 100 / 2,
-    alignSelf: 'center',
+    //alignSelf: 'center',
   },
   iconStyle: {
     width: 15,
@@ -101,7 +115,7 @@ const styles = StyleSheet.create({
   //right:width/4.5,
 
   },
-  labelStyle:{color:colors.white,right:20}
+  labelStyle:{color:colors.purple,right:20,fontWeight:"bold",fontSize:15}
 });
 
 export default CustomSidebarMenu;

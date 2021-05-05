@@ -1,7 +1,7 @@
 export {
     setProducts,
-    getProducts,
-    getProducts1,
+    Category_APICall,
+    Product_APICALL,
 
     searchProducts,
 } from './products';

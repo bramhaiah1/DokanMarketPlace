@@ -17,7 +17,7 @@ export default function MyDrawer() {
         component={LoginsModule}
         
         options={{  drawerLabel: () => null, 
-          gestureEnabled:false,
+        //  gestureEnabled:false,
           
 
         }}

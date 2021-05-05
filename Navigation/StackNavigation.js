@@ -1,19 +1,19 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import Homescreen from "../Components/Screens/HomeScreen/Homescreen";
+import Homescreen from "../Screens/HomeScreen/Homescreen";
 import TabNavigation from './TabNavigation'
-import Category1 from "../Components/Screens/Category/Category";
-import Products from "../Components/Screens/Products/Products";
-import ProductBuy from "../Components/Screens/Buy/ProductBuy";
-import CartScreen from "../Components/Screens/CartScreen/CartScreen";
-import BestsaleProduct from "../Components/Screens/Products/BestsaleProduct";
-import Searchbar from "../Components/Screens/Search/Searchbar";
-import WishList1 from "../Components/Screens/WishList/WishList";
-import Profile1 from "../Components/Screens/Profile/Profile";
-import Checkout from "../Components/Screens/Checkout/Checkout";
-import LoginScreen from "../Components/Screens/Login/LoginScreen";
-import Forgotpassword from "../Components/Screens/Login/Forgotpassword";
-import Registrationscreen from "../Components/Screens/Login/Registrationscreen";
+import Category1 from "../Screens/Category/Category";
+import Products from "../Screens/Products/Products";
+import ProductBuy from "../Screens/Buy/ProductBuy";
+import CartScreen from "../Screens/CartScreen/CartScreen";
+import BestsaleProduct from "../Screens/Products/BestsaleProduct";
+import Searchbar from "../Screens/Search/Searchbar";
+import WishList1 from "../Screens/WishList/WishList";
+import Profile1 from "../Screens/Profile/Profile";
+import Checkout from "../Screens/Checkout/Checkout";
+import LoginScreen from "../Screens/Login/LoginScreen";
+import Forgotpassword from "../Screens/Login/Forgotpassword";
+import Registrationscreen from "../Screens/Login/Registrationscreen";
 
 
 const Stack = createStackNavigator();
@@ -84,6 +84,27 @@ const LoginsModule = () => {
     </Stack.Navigator>
   );
 };
+const Login=()=>{
+  <Stack.Navigator>
+
+  <Stack.Screen
+  name="LoginScreen"
+  options={{headerShown: false, tabBarVisible: true}}
+  component={LoginScreen}
+/>
+ <Stack.Screen
+  name="Forgotpassword"
+  options={{headerShown: false, tabBarVisible: true}}
+  component={Forgotpassword}
+/>
+ <Stack.Screen
+  name="Registrationscreen"
+  options={{headerShown: false, tabBarVisible: true}}
+  component={Registrationscreen}
+/>
+</Stack.Navigator>
+
+}
 const Profile = () => {
     return (
       <Stack.Navigator>
