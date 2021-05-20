@@ -3,23 +3,25 @@ import * as actionTypes from '../Actions/actionTypes';
 
 const initialState = {
   products: [],
+  Order:[],
   searchResults: []
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_PRODUCTS:
+    //  alert("k")
       return {
         ...state,
         products: action.products,
         searchResults: action.products
 
       }
-    
+     
     case actionTypes.SEARCH_PRODUCTS:
 
       let searchResults = [...state.products];
-      alert(JSON.stringify(action.items))
+     // alert(JSON.stringify(action.items))
       //alert(action.items)
 
       searchResults = searchResults.filter(product => {

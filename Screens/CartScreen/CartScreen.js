@@ -24,6 +24,7 @@ import {
   CardItem,
 } from 'native-base';
 import {Avatar, Badge, withBadge} from 'react-native-elements';
+import HeaderwithoutMenu from '../../Components/HeaderwithoutMenu'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -182,55 +183,7 @@ class CartScreen extends Component {
   render() {
       return (
         <View style={styles.main}>
-                     <Header style={{backgroundColor: colors.white}}>
-          <Left>
-            <AntDesign
-              onPress={() => this.props.navigation.goBack(null)}
-              name="arrowleft"
-              style={{color: colors.Primary}}
-              size={20}
-            />
-          </Left>
-          <Body style={{alignItems:"center",left:20}}>
-            <Title style={{color: colors.Primary}}>
-              Items In Cart
-            </Title>
-          </Body>
-          <Right>
-            {/* <Icon
-              onPress={() => this.props.navigation.navigate('WishList')}
-              style={{right: width / 20, color: colors.Primary}}
-              name="heart-outline"
-              size={25}
-            /> */}
-
-            {/* <Badge
-              value={this.props.count}
-              status="primary"
-              containerStyle={{
-                position: 'absolute',
-                right: width / 40,
-                bottom: height / 50,
-              }}
-            /> */}
-            {/* <Badge
-              value={route.params.count}
-              status="primary"
-              containerStyle={{
-                position: 'absolute',
-                right: 1,
-                bottom: height / 50,
-              }}
-            />
-            <AntDesign
-              onPress={() => this.props.navigation.navigate('Cartscreen')}
-              style={{right: width / 30, color: colors.backgroundcolor}}
-              name="shoppingcart"
-              size={25}
-            />*/ }
-          </Right>
-        </Header>
-
+                   <HeaderwithoutMenu item={{Title:"Cart Screen"}}/>
          
          {this.state.itemsCount <= 0?
           <View style={[styles.centerElement, { height: 450 }]}>
@@ -266,11 +219,11 @@ class CartScreen extends Component {
             </TouchableOpacity>
           </View>:
           
-          <View>
-            <ScrollView style={{height:height/2}}>
+          <View style={{marginVertical:5}}>
+            <ScrollView style={{height:height/1.8}}>
           <FlatList data={this.state.itemsInCart} renderItem={this.loadproducts} />
           </ScrollView>
-          <View style={styles.border} />
+          {/* <View style={styles.border} />
           <View style={styles.view2}>
             <Text style={styles.text3}>SUB TOTAL</Text>
             <Text style={[styles.text3, { right: width / 15 }]}>${this.props.total}</Text>
@@ -301,9 +254,9 @@ class CartScreen extends Component {
             <Text style={[styles.text4, { right: width / 15 }]}>${this.props.total + 20 - 15}</Text>
 
 
-          </View>
+          </View> */}
           <View style={{
-            marginTop: height / 30, marginBottom: height / 30,backgroundColor:colors.white
+            marginTop: height / 7, marginBottom: height / 30,backgroundColor:colors.white
           }}>
 
             <TouchableOpacity onPress={() => {
@@ -326,7 +279,6 @@ class CartScreen extends Component {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    padding: 10,
     backgroundColor: colors.white
 
   },
@@ -347,16 +299,14 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#808080",
-    fontFamily: "halfmoon_bold",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily:"Poppins-SemiBold",
     top: height / 80
   },
   price: {
     color: colors.Primary,
-    fontFamily: "halfmoon_bold",
     fontSize: Size.medium,
-    fontWeight: "bold",
+    fontFamily:"Poppins-SemiBold",
     top: height / 160
   },
   Done: {
@@ -370,7 +320,7 @@ const styles = StyleSheet.create({
   },
   Getstartedtext: {
     color: colors.white,
-    fontWeight: "bold",
+    fontFamily:"Poppins-SemiBold",
     fontSize: 20,
     alignItems: "center"
   },
@@ -378,7 +328,8 @@ const styles = StyleSheet.create({
     flexDirection: "row", marginTop: height / 60, alignSelf: "center",
   },
   view2: { flexDirection: "row", justifyContent: "space-between", marginLeft: width / 3.2 },
-  text1: { fontWeight: "bold", color: colors.Primary, fontSize: 20 },
+  text1: { fontFamily:"Poppins-SemiBold",
+  color: colors.Primary, fontSize: 20 },
   text3: { fontSize: 13, fontWeight: "bold" },
   text4: { fontSize: 13, color: colors.Primary, fontWeight: "bold" },
   border: { height: 2, backgroundColor: colors.cement, width: width / 1.2, alignSelf: "center", marginBottom: height / 150, marginTop: height / 50 },

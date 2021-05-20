@@ -3,6 +3,8 @@ const initialState = {
   wishListItems: [],
   itemsCount: 0,
   itemsCount1: 0,
+  Address:'',
+  AddAddress:''
 
 };
 
@@ -56,7 +58,7 @@ else{
       };
     }
   } else if (action.type == "DELETE_ITEM") {
-    //alert(JSON.stringify(action.item))
+    alert(JSON.stringify(action.item))
     let total;
     if(state.total>=0){
       total=parseInt(state.total)-parseInt(action.item.price*action.item.quantity);
@@ -142,7 +144,7 @@ else{
       itemsCount1:count
     };
   } else if (action.type == "DELETE_FROM_CART") {
-    let newWishListItems = state.wishListItems.filter((item) => {
+        let newWishListItems = state.wishListItems.filter((item) => {
       return item.id != action.item.id;
     });
     let count = state.itemsCount1 - 1;
@@ -161,7 +163,39 @@ else{
       total:0,
 
     };
-  }
+  }else if (action.type =="UpdateAddress") {
+   // alert(JSON.stringify(action.item))
+   let Updatednew = state.AddAddress.filter((item) => {
+    return item.first_name != action.item.first_name;})
+    //alert(JSON.stringify(Updatednew))
+
+    let updatedAddAddress = [...Updatednew, action.item];
+//alert(JSON.stringify(updatedAddAddress))
+  //  let updatedAddAddress1 = [ updatedAddAddress];
+   // alert(JSON.stringify(updatedAddAddress1))
+
+    return {
+      ...state,
+      AddAddress: updatedAddAddress,
+    };}
+    else if (action.type =="DeleteAddress") {
+      // alert(JSON.stringify(action.item))
+      let Updatednew = state.AddAddress.filter((item) => {
+       return item.first_name != action.item.first_name;})
+      /// alert(JSON.stringify(Updatednew))
+
+       return {
+         ...state,
+         AddAddress: Updatednew,
+       };}
+       else if (action.type =="AddAddress") {
+     // alert(JSON.stringify(action.item))
+    let updatedAddAddress = [...state.AddAddress, action.item];
+   
+      return {
+        ...state,
+        AddAddress: updatedAddAddress,
+      };}
 
   return state;
 };

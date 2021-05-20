@@ -1,11 +1,12 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
   StyleSheet,
   Image,
   Text,
+  Alert,
   Linking,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -19,25 +20,56 @@ import {
 } from '@react-navigation/drawer';
 import {colors,width,height,scale} from '../Config/Theme';
 import {  Login} from "./StackNavigation";
+import AsyncStorage from '@react-native-community/async-storage';
 
 const CustomSidebarMenu = (props) => {
- 
+  const [status, setstatus] = React.useState('Login');
+const Logout=async()=>{
+  Alert.alert("Hold on!","Are You Sure Do You Want Logout", [
+      
+    { text: "Yes", onPress: () =>LogoutSucess()
+  },
+  { text: "No", onPress: () =>LogoutCancel()
+  }
+  ]);
+  
 
+}
+const LogoutCancel=()=>{
+
+}
+const LogoutSucess=async()=>{
+  await AsyncStorage.removeItem("token");
+  setstatus("Login")
+}
+useEffect(async()=>{
+
+  const ID =  await AsyncStorage.getItem('token')
+  if(ID!=null){
+    setstatus("Logout")
+  }
+    //alert(JSON.stringify(ID)
+    })
+    //alert(status)
   return (
     <SafeAreaView style={{flex: 1,backgroundColor:colors.white}}>
-            <AntDesign onPress={()=>props.navigation.goBack()} name='close' style={{alignSelf:"flex-end"}} color={colors.purple} size={30} />
+<View style={{backgroundColor:colors.Primary,paddingVertical:10}}>
+<AntDesign onPress={()=>props.navigation.goBack()} name='close' style={{alignSelf:"flex-end"}} color={colors.white} size={30} />
 
       {/*Top Large Image */}
       <Image
                 source={require("../assets/ProfileAvatar.png")}
                 style={styles.sideMenuProfileIcon}
       />
-      <View style={{left:10}}>
-        <Text style={{fontWeight:"bold",fontSize:20,marginTop:10}}>Sandra Adams</Text>
-        <Text style={{fontWeight:"bold",fontSize:15,color:colors.ash}}>Sandra_66@gmail.com</Text>
+      <View style={{left:20}}>
+        <Text style={{                    fontFamily: 'Poppins-SemiBold',
+fontSize:20,marginTop:10 ,color:colors.white}}>Sandra Adams</Text>
+        <Text style={{                    fontFamily: 'Poppins-SemiBold',
+fontSize:15,color:colors.white}}>Sandra_66@gmail.com</Text>
 
       </View>
-      <View style={{borderWidth:0.5,borderColor:colors.ash,marginTop:20}}/>
+      </View>
+      <View style={{borderWidth:0.5,borderColor:colors.orange,}}/>
 
       <DrawerContentScrollView {...props}>
         
@@ -45,42 +77,56 @@ const CustomSidebarMenu = (props) => {
         <DrawerItem
           label="Home"
           icon={() =>
-            <Feather name="home"   color={colors.purple} size={20}/>
-
+            <Feather name="home"   color={colors.Primary} size={20}/>
           }
-labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Category')}/>
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('TabNavigation')}/>
+         
          <DrawerItem
           label="Notification"
           icon={() =>
-            <Feather name="bell"   color={colors.purple} size={20}/>
+            <Feather name="bell"   color={colors.Primary} size={20}/>
 
           }
 labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Collection')}/>
+    <DrawerItem
+          label="My Orders"
+          icon={() =>
+            <FontAwesome5Icon name="first-order"   color={colors.Primary} size={20}/>
+
+          }
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('MyTransaction')}/>
 
 <DrawerItem
  label="About Us"
  icon={() =>
-  <AntDesign name="infocirlceo"   color={colors.purple} size={20}
+  <AntDesign name="infocirlceo"   color={colors.Primary} size={20}
   />
  }
 labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Deal')}/>
 
 
          <DrawerItem
-          label="Review"
+          label="My Account"
           icon={() =>
-            <Feather name="star"   color={colors.purple} size={20}/>
+            <Feather name="user"   color={colors.Primary} size={20}/>
 
           }
-labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Reviewscreen')}/>
+labelStyle={styles.labelStyle}          onPress={()=>props.navigation.navigate('Profile')}/>
+{status==="Login"?   <DrawerItem
+          label={"Login"}
+          icon={() =>
+            <FontAwesome5Icon name="sign-in-alt"   color={colors.Primary} size={20}/>
 
+          }
+labelStyle={styles.labelStyle}     onPress={()=>props.navigation.navigate('LoginScreen')}    />
+      :
          <DrawerItem
-          label="Login"
+          label={"Logout"}
           icon={() =>
-            <FontAwesome5Icon name="sign-in-alt"   color={colors.purple} size={20}/>
+            <FontAwesome5Icon name="sign-in-alt"   color={colors.Primary} size={20}/>
 
           }
-labelStyle={styles.labelStyle}     onPress={()=>props.navigation.navigate('LoginScreen')}     />
+labelStyle={styles.labelStyle}     onPress={()=>Logout()}     />}
       </DrawerContentScrollView>
       
     </SafeAreaView>
@@ -115,7 +161,8 @@ const styles = StyleSheet.create({
   //right:width/4.5,
 
   },
-  labelStyle:{color:colors.purple,right:20,fontWeight:"bold",fontSize:15}
+  labelStyle:{color:colors.Primary,right:20,                    fontFamily: 'Poppins-SemiBold',
+  fontSize:15}
 });
 
 export default CustomSidebarMenu;

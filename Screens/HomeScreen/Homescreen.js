@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
-
 import {SliderBox} from 'react-native-image-slider-box';
 import Icon1 from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -20,6 +19,7 @@ import {Avatar, Badge, withBadge} from 'react-native-elements';
 import AnimatedLoader from 'react-native-animated-loader';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+import GlobalFont from 'react-native-global-font';
 import {
   Header,
   Right,
@@ -36,13 +36,13 @@ import {
   Category_APICall,
   Product_APICALL,
   searchProducts,
+  Order_APICall,
 } from '../../Store/Actions/index';
 
-import {colors,width,height,scale,verticalScale} from '../../Config/Theme';
-import ProductComponent from "../../Components/ProductComponent";
-import CategoryComponent from "../../Components/CategoryComponent";
+import {colors, width, height, scale, verticalScale} from '../../Config/Theme';
+import ProductComponent from '../../Components/ProductComponentScrollView';
 import Categorycomponent from '../../Components/CategoryComponent';
-import Header1 from "../../Components/Header";
+import Header1 from '../../Components/Header';
 const images = [
   require('../../assets/slider1.jpg'),
   require('../../assets/slider2.jpg'),
@@ -53,19 +53,20 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      see: -1,
-      badge:false
+      badge: false,
     };
   }
-  _keyExtractor = (item, idx) => item.id;
-
-  _renderItem = ({item}) => <Avatarmodel item={item} />;
-
+ 
   componentWillUnmount() {
     this._unsubscribe();
   }
   componentDidMount() {
     this.props.Category_APICall();
+    let fontName1 = 'Poppins-SemiBold';
+    let fontName = 'Poppins-ExtraLight';
+    GlobalFont.applyGlobal(fontName, fontName1);
+
+    //alert(JSON.stringify(this.props.products))
     this.props.Product_APICALL();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.getItemsCount();
@@ -85,7 +86,7 @@ class Home extends Component {
     this.setState(
       {
         count: this.state.count + 1,
-        badge:true,
+        badge: true,
       },
       () => {
         let count = this.props.itemsCount.itemsCount;
@@ -104,155 +105,180 @@ class Home extends Component {
     // alert(JSON.stringify(this.props.products))
 
     var see = 0;
-    var see1 = 1;
-    var see2 = 1;
-    const { route } = this.props;
-if(!this.state.badge){return null}else{
-    return (
-      <View style={{flex: 1, backgroundColor: colors.white}}>
-        <Header1 item={route.params.count}
-        />
-        
-        <View style={{ alignSelf: 'center'}}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{width: width, height: height}}>
-            <SliderBox
-              images={images}
-              sliderBoxHeight={height / 3}
-              onCurrentImagePressed={index =>
-                console.warn(`image ${index} pressed`)
-              }
-              dotColor={colors.activedot}
-              inactiveDotColor={colors.inactivedot}
-            />
+    var see1 = 0;
+    var see2 = 0;
+    this.props.products1.map(
+      (item, index) => (
+        item.featured ? (see1 = see1 + 1) : null))
+        this.props.products.map(
+          (item, index) => (
+          
+            item.parent === 0 &&
+            item.name != 'Uncategorized' ? (
+              (see = see + 1)) : null))
+              this.props.products1.map(
+                (item, index) => (
+                  item.total_sales >= 1 ? (see2 = see2 + 1) : null))
+               
+    const {route} = this.props;
+    if (!this.state.badge) {
+      return null;
+    } else {
+      return (
+        <View style={{flex: 1, backgroundColor: colors.white}}>
+          <Header1 item={route.params.count} />
 
+          <View style={{alignSelf: 'center'}}>
             <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              style={{
-                width: width,
-                height: height / 4,
-                marginTop: height / 20,
-                // backgroundColor: colors.backgroundcolor,
-              }}>
-              {this.props.products != '' ? null : (
-                <View
+              showsVerticalScrollIndicator={false}
+              style={{width: width, height: height}}>
+              <SliderBox
+                images={images}
+                sliderBoxHeight={height / 3}
+                onCurrentImagePressed={index =>
+                  console.warn(`image ${index} pressed`)
+                }
+                dotColor={colors.activedot}
+                inactiveDotColor={colors.inactivedot}
+              />
+               <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 13,
+                }}>
+                 
+                <Text
                   style={{
-                    alignSelf: 'center',
-                    justifyContent: 'center',
+                    fontSize: 18,
+                    left:10,
+                    fontFamily: 'Poppins-SemiBold',
                   }}>
-                  <AnimatedLoader
-                    visible={true}
-                    overlayColor={colors.Animationoverlay}
-                    source={require('./animation.json')}
-                    animationStyle={{
-                      width: 100,
-                      height: 100,
-                    }}
-                    speed={1}
-                  />
-                </View>
-              )}
-              {this.props.products.map(
+                  Category
+                </Text>
+                <TouchableOpacity
+                                    onPress={() => this.props.navigation.navigate('Category')}>
+
+                  
+                    
+                  <Text
+                    style={{
+                      color: colors.Primary,
+                      fontSize: 15,
+                      right: 10,
+                      fontFamily: 'Poppins-ExtraLight',
+                    }}>
+                    View All({see})<AntDesign name="right" size={16} color={colors.Primary}/>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+             
+
+              <ScrollView
+                horizontal={true}
+                alignSelf={'center'}
+                showsHorizontalScrollIndicator={false}
+                style={{
+                  width: "94%" ,
+                }}>
+                {this.props.products != '' ? null : (
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <AnimatedLoader
+                      visible={true}
+                      overlayColor={colors.Animationoverlay}
+                      source={require('./animation.json')}
+                      animationStyle={{
+                        width: 100,
+                        height: 100,
+                      }}
+                      speed={1}
+                    />
+                  </View>
+                )}
+
+{this.props.products.map(
                 (item, index) => (
                   item.parent === 0 ? (see = see + 1) : null,
-                  item.image === null &&
+                
                   item.parent === 0 &&
                   item.name != 'Uncategorized' ? (
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        marginLeft: width / 20,
-                        marginRight: width / 20,
-                      }}>
-                      <Text style={{top: height / 7}}>{item.name}</Text>
-                      <TouchableOpacity></TouchableOpacity>
-                    </View>
-                  ) : item.parent === 0 &&
-                    item.parent === 0 &&
-                    item.name != 'Uncategorized' ? (
-                      <Categorycomponent item={item}/>
-                    // <View style={styles.view1}>
-                    //   <TouchableOpacity
-                    //     onPress={() =>
-                    //       this.props.navigation.navigate('Products', {
-                    //         name: item.id,
-                    //       })
-                    //     }>
-                    //     <Image
-                    //       style={styles.image}
-                    //       resizeMode={'contain'}
-                    //       source={{uri: item.image.src}}
-                    //     />
-                    //     <View style={{height: height / 15}}>
-                    //       <Text
-                    //         style={{
-                    //           textAlign: 'center',
-                    //           top: height / 80,
-                    //           fontWeight: 'bold',
-                    //         }}>
-                    //         {item.name}
-                    //       </Text>
-                    //     </View>
-                    //   </TouchableOpacity>
-                    // </View>
-                  ) : null
-                ),
-              )}
-            </ScrollView>
+                    <Categorycomponent item={item} />):null))}
+              </ScrollView>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                bottom: height / 3.8,
-                justifyContent: 'space-between',
-              }}>
-              <Text
-                style={{fontSize: 18, fontWeight: 'bold', left: width / 20}}>
-                Category
-              </Text>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Category')}>
+             
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 13,
+                }}>
+                 
                 <Text
-                  style={{color: colors.Textcolor1, fontSize: 15, right: width / 20}}>
-                  See All({see - 1})
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-           <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              style={{
-                width: width,
-                height: height / 4,
-              //  marginTop: height / 20,
-              }}>
-              {this.props.products1 != '' ? null : (
-                <View
                   style={{
-                    alignSelf: 'center',
-                    justifyContent: 'center',
+                    fontSize: 18,
+                    left: 10,
+                    fontFamily: 'Poppins-SemiBold',
                   }}>
-                  <AnimatedLoader
-                    visible={true}
-                    overlayColor={colors.overlayColor}
-                    source={require('./animation.json')}
-                    animationStyle={{
-                      width: 100,
-                      height: 100,
-                    }}
-                    speed={1}
-                  />
-                </View>
-              )}
-              {this.props.products1.map(
-                (item, index) => (
-                  item.featured ? (see1 = see1 + 1) : null,
-                  item.featured ? (
-                    <ProductComponent item={item}/>
-                    // <View style={styles.view1}>
+                  Top Featured
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('BestsaleProduct', {
+                      name: 'Top Featured Products',
+                    })
+                  }>
+                    
+                  <Text
+                    style={{
+                      color: colors.Primary,
+                      fontSize: 15,
+                      right: 10,
+                      fontFamily: 'Poppins-ExtraLight',
+                    }}>
+                    View All({see1})<AntDesign name="right" size={16} color={colors.Primary}/>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <ScrollView
+                horizontal={true}
+                alignSelf={'center'}
+                showsHorizontalScrollIndicator={false}
+                style={{
+                  width: "94%" ,
+                  //  marginTop: height / 20,
+                }}>
+                {this.props.products1 != '' ? null : (
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <AnimatedLoader
+                      visible={true}
+                      overlayColor={colors.overlayColor}
+                      source={require('./animation.json')}
+                      animationStyle={{
+                        width: 100,
+                        height: 100,
+                      }}
+                      speed={1}
+                    />
+                  </View>
+                )}
+                {this.props.products1.map(
+                  (item, index) => (
+                    item.featured ? (see1 = see1 + 1) : null,
+                    item.featured ? (
+                     
+                      <ProductComponent item={item} />
+
+                    ) : // <View style={styles.view1}>
                     //   <TouchableOpacity
                     //     onPress={() =>
                     //       this.props.navigation.navigate('ProductBuy', {
@@ -277,66 +303,75 @@ if(!this.state.badge){return null}else{
                     //     </View>
                     //   </TouchableOpacity>
                     // </View>
-                  ) : null
-                ),
-              )}
-            </ScrollView>
+                    null
+                  ),
+                )}
+              </ScrollView>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                bottom: height / 3.8,
-              }}>
-              <Text
-                style={{fontSize: 20, fontWeight: 'bold', left: width / 40}}>
-                Top Featured
-              </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate('BestsaleProduct', {name: ''})
-                }>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 13,
+                }}>
                 <Text
-                  style={{color: colors.Textcolor1, fontSize: 15, right: width / 20}}>
-                  See All({see1 - 1})
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              style={{
-                width: width,
-                height: height / 5,
-                marginTop: height / 20,
-                marginBottom: height / 10,
-              }}>
-              {this.props.products1 != '' ? null : (
-                <View
                   style={{
-                    alignSelf: 'center',
-                    justifyContent: 'center',
+                    fontSize: 18,
+                    left:10,
+                    fontFamily: 'Poppins-SemiBold',
                   }}>
-                  <AnimatedLoader
-                    visible={true}
-                    overlayColor={colors.overlayColor}
-                    source={require('./animation.json')}
-                    animationStyle={{
-                      width: 100,
-                      height: 100,
-                    }}
-                    speed={1}
-                  />
-                </View>
-              )}
-              {this.props.products1.map(
-                (item, index) => (
-                  item.total_sales >= 1 ? (see2 = see2 + 1) : null,
-                  item.total_sales >= 1 ? (
-                    <ProductComponent item={item}/>
+                  Best Selling
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('BestsaleProduct', {
+                      name: 'Best Sale Products',
+                    })
+                  }>
+                  <Text
+                    style={{
+                      color: colors.Primary,
+                      fontSize: 15,
+                      right: 10,
+                      fontFamily: 'Poppins-ExtraLight',
+                    }}>
+                    View All({see2})<AntDesign name="right" size={16} color={colors.Primary}/>
 
-                    // <View style={styles.view1}>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                style={{
+                  width: "94%" ,
+                  alignSelf: 'center',
+                  marginBottom: 80,
+                }}>
+                {this.props.products1 != '' ? null : (
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <AnimatedLoader
+                      visible={true}
+                      overlayColor={colors.overlayColor}
+                      source={require('./animation.json')}
+                      animationStyle={{
+                        width: 100,
+                        height: 100,
+                      }}
+                      speed={1}
+                    />
+                  </View>
+                )}
+                {this.props.products1.map(
+                  (item, index) => (
+                    item.total_sales >= 1 ? (see2 = see2 + 1) : null,
+                    item.total_sales >= 1 ? (
+                      <ProductComponent item={item} />
+                    ) : // <View style={styles.view1}>
                     //   <TouchableOpacity
                     //     onPress={() =>
                     //       this.props.navigation.navigate('ProductBuy', {
@@ -361,36 +396,15 @@ if(!this.state.badge){return null}else{
                     //     </View>
                     //   </TouchableOpacity>
                     // </View>
-                  ) : null
-                ),
-              )}
+                    null
+                  ),
+                )}
+              </ScrollView>
             </ScrollView>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                bottom: height / 2.7,
-              }}>
-              <Text
-                style={{fontSize: 20, fontWeight: 'bold', left: width / 40}}>
-                Best Selling Products
-              </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate('BestsaleProduct', {
-                    name: 'Bestsale',
-                  })
-                }>
-                <Text
-                  style={{color:colors.Textcolor1, fontSize: 15, right: width / 20}}>
-                  See All({see2 - 1})
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
+          </View>
         </View>
-      </View>
-    );}
+      );
+    }
   }
 }
 const mapStateToProps = state => ({
@@ -403,6 +417,7 @@ const mapDispatchToProps = dispatch => {
   return {
     Category_APICall: () => dispatch(Category_APICall()),
     Product_APICALL: () => dispatch(Product_APICALL()),
+    Order_APICall: () => dispatch(Order_APICall()),
   };
 };
 const styles = StyleSheet.create({

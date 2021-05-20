@@ -14,9 +14,14 @@ import Checkout from "../Screens/Checkout/Checkout";
 import LoginScreen from "../Screens/Login/LoginScreen";
 import Forgotpassword from "../Screens/Login/Forgotpassword";
 import Registrationscreen from "../Screens/Login/Registrationscreen";
-
+import Addaddress from "../Screens/Checkout/AddAddress"
+import Review from '../Screens/Review/Reviewscreen'
+import AddReview from '../Screens/Review/AddReview'
+import MyTransaction from '../Screens/Transaction/MyTransaction'
+import Tracking from '../Screens/Transaction/Tracking'
 
 const Stack = createStackNavigator();
+
 const LoginsModule = () => {
   return (
     <Stack.Navigator>
@@ -67,6 +72,11 @@ const LoginsModule = () => {
         component={Checkout}
       />
        <Stack.Screen
+        name="Addaddress"
+        options={{headerShown: false, tabBarVisible: true}}
+        component={Addaddress}
+      />
+       <Stack.Screen
         name="LoginScreen"
         options={{headerShown: false, tabBarVisible: true}}
         component={LoginScreen}
@@ -80,6 +90,26 @@ const LoginsModule = () => {
         name="Registrationscreen"
         options={{headerShown: false, tabBarVisible: true}}
         component={Registrationscreen}
+      />
+       <Stack.Screen
+        name="Review"
+        options={{headerShown: false, tabBarVisible: true}}
+        component={Review}
+      />
+         <Stack.Screen
+        name="AddReview"
+        options={{headerShown: false, tabBarVisible: true}}
+        component={AddReview}
+      />
+       <Stack.Screen
+        name="MyTransaction"
+        options={{headerShown: false, tabBarVisible: true}}
+        component={MyTransaction}
+      />
+       <Stack.Screen
+        name="Tracking"
+        options={{headerShown: false, tabBarVisible: true}}
+        component={Tracking}
       />
     </Stack.Navigator>
   );

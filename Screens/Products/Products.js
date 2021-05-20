@@ -10,7 +10,7 @@ import {
 // import { connect } from 'react-redux'
 import { Checkbox } from 'react-native-paper';
 
-import ProductModel from './ProductModel'
+import ProductModel from '../../Components/ProductComponent'
 import EmptyProducts from './EmptyProducts'
 import { connect } from "react-redux";
 import {colors,width,height,scale,verticalScale} from '../../Config/Theme';
@@ -117,10 +117,12 @@ getItemsCount1 = () => {
     const { navigation } = this.props;
 
    const Text1 = route.params.name
+   const Category = route.params.category
+
   var   data = this.props.products1.filter((item) => item.categories[0].id == Text1).map(({id, name,parent, price,images,description,categories}) => ({id,parent, name, price,images,description,categories}));
   var   data1 = this.props.products1.filter((item) => item.categories[0].id == Text1).map(({categories}) => ({categories}));
   var   data2 = data1.map((categories) => (categories));
-  
+
   const newArray = [];
 
      data2.map((item)=>{(item.categories.forEach(obj => {
@@ -129,22 +131,22 @@ getItemsCount1 = () => {
        }
      }
       ))})
-     
+    
 const { checkboxes, checkedId } = this.state
 
      return (
       <View style={ styles.container }>
-            <Header style={{backgroundColor:"rgba(245,245,245,255)"}}>
+            <Header style={{backgroundColor:colors.Primary}}>
                <Left>
-               <Icon onPress={()=>this.setState({filter:!this.state.filter})} name="filter" style={{color:"rgba(115,149,160,255)"}} size={20} />
+               <Icon onPress={()=>this.setState({filter:!this.state.filter})} name="filter" style={{color:colors.white}} size={20} />
 
                 </Left>
                 <Body>
-                  <Title style={{color:"rgba(115,149,160,255)"}}>Products</Title>
+                  <Title style={{color:colors.white,fontSize:15, fontFamily: 'Poppins-SemiBold',width:190,right:10}}>{Category}</Title>
                 </Body>
                 <Right>
                
-                <Icon onPress={() => this.props.navigation.navigate("WishList")} style={{right:width/10,color:"rgba(115,149,160,255)"}}  name="heart-outline" size={25} />
+                <Icon onPress={() => this.props.navigation.navigate("WishList")} style={{right:width/10,color:colors.white}}  name="heart-outline" size={25} />
                 
                 <Badge
               value={route.params.count1}
@@ -156,12 +158,13 @@ const { checkboxes, checkedId } = this.state
               status="primary"
               containerStyle={{ position: "absolute", right: 1, bottom:height/50 }}
             />
-                <AntDesign onPress={() => this.props.navigation.navigate("Cartscreen")} style={{right:width/30,color:"rgba(115,149,160,255)",}} name="shoppingcart" size={25} />
+                <AntDesign onPress={() => this.props.navigation.navigate("Cartscreen")} style={{right:width/30,color:colors.white,}} name="shoppingcart" size={25} />
     
                 </Right>
          
             </Header>
-           
+            <View style={{marginVertical:4,flex:1,backgroundColor:colors.white,
+  }}>
         
          {newArray.map((item,index) => (
            this.state.filter?
@@ -212,7 +215,7 @@ JSON.stringify(item.id)===Text1?<View>
    renderItem={ this._renderItem }
   />}
       {/* {this.state.show?<ModelScreen/>:null} */}
-     
+     </View>
       </View>
     );
   }
@@ -227,8 +230,7 @@ JSON.stringify(item.id)===Text1?<View>
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    margin: scale(25),
+    flex: 1,backgroundColor:colors.white
   },
   sectionTitle: {
     fontSize: 17,

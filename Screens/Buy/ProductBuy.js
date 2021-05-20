@@ -30,11 +30,12 @@ import {
   CardItem,
 } from 'native-base';
 import {useRoute} from '@react-navigation/native';
-
+import Reviewscreen from "../Review/Reviewscreen";
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
+import HeaderwithWishlist from '../../Components/HeaderwithWishlist'
 import {Avatar, Badge, withBadge} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Buy extends Component {
   constructor(props) {
@@ -91,13 +92,18 @@ class Buy extends Component {
     this.setState({visible:!this.state.visible})
 
   };
-  addCartHandler = pro => {
+  addCartHandler = async pro => {
+    var ID = await AsyncStorage.getItem('token');
     let qty = 1;
     pro.quantity = qty;
     this.props.addToCart(pro);
     this.getItemsCount1();
     const {navigation} = this.props;
-    navigation.navigate('CartScreen');
+    if(ID===null){
+      navigation.navigate('LoginScreen');
+
+    }else{
+    navigation.navigate('CartScreen');}
   };
   addCartHandler1 = pro => {
     let qty = 1;
@@ -160,55 +166,7 @@ class Buy extends Component {
     ];
     return (
       <View style={styles.container}>
-        <Header style={{backgroundColor: colors.white}}>
-          <Left>
-            <AntDesign
-              onPress={() => this.props.navigation.goBack(null)}
-              name="arrowleft"
-              style={{color: colors.Primary}}
-              size={20}
-            />
-          </Left>
-          <Body style={{alignItems:"center",left:20}}>
-            <Title style={{color: colors.Primary}}>
-              Product Details
-            </Title>
-          </Body>
-          <Right>
-            <Icon
-              onPress={() => this.props.navigation.navigate('WishList')}
-              style={{right: width / 20, color: colors.Primary}}
-              name="heart-outline"
-              size={25}
-            />
-
-            <Badge
-              value={route.params.count1}
-              status="primary"
-              containerStyle={{
-                position: 'absolute',
-                right: width / 40,
-                bottom: height / 50,
-              }}
-            />
-            {/* <Badge
-              value={route.params.count}
-              status="primary"
-              containerStyle={{
-                position: 'absolute',
-                right: 1,
-                bottom: height / 50,
-              }}
-            />
-            <AntDesign
-              onPress={() => this.props.navigation.navigate('Cartscreen')}
-              style={{right: width / 30, color: colors.backgroundcolor}}
-              name="shoppingcart"
-              size={25}
-            />*/ }
-          </Right>
-        </Header>
-
+        <HeaderwithWishlist item={{Wishlistcount:route.params.count1,Title:"Product Details"}}/>
         <ScrollView style={{backgroundColor:colors.white}}>
         <SliderBox
               images={images}
@@ -226,7 +184,7 @@ class Buy extends Component {
           <View style={{width:"95%",marginTop:5, elevation:10,backgroundColor:colors.white,alignSelf:"center",marginTop:10,paddingTop:10,borderTopLeftRadius:5,borderTopRightRadius:5}}>
         <Text
               style={{
-                fontWeight: 'bold',
+fontFamily:"Poppins-SemiBold",
                 color: colors.Primary,
                 fontSize: Size.primarysize,
                 left: width / 20,
@@ -238,7 +196,7 @@ class Buy extends Component {
                 style={{
                   fontSize:Size.medium,
                   color:colors.ash,
-                  fontWeight: 'bold',
+                  fontFamily:"Poppins-SemiBold",
                 }}>
                 {data[0].categories[0].name} 
               </Text>
@@ -258,7 +216,8 @@ class Buy extends Component {
                   onPress={() =>
                     this.setState({activeTab: 1, des: !this.state.des})
                   }>
-                  <Text style={{fontSize: Size.Primary, fontWeight: 'bold',color:colors.Primary,textAlign:"center"}}>
+                  <Text style={{fontSize: Size.Primary,fontFamily:"Poppins-SemiBold",
+color:colors.Primary,textAlign:"center"}}>
                     Description
                   </Text>
                 </TouchableOpacity>
@@ -267,7 +226,8 @@ class Buy extends Component {
  onPress={() =>
                     this.setState({activeTab: 2, des: !this.state.des})
                   }>
-                  <Text style={{fontSize: Size.Primary, fontWeight: 'bold',color:colors.Primary,textAlign:"center"}}>Review</Text>
+                  <Text style={{fontSize: Size.Primary, fontFamily:"Poppins-SemiBold",
+color:colors.Primary,textAlign:"center"}}>Review</Text>
                 </TouchableOpacity>
             </View>
             <View style={{flexDirection: 'row',width:width/1.1,justifyContent:"space-evenly"}}>
@@ -307,7 +267,7 @@ class Buy extends Component {
                   <Text
                     style={{
                       fontSize: 10,
-                      fontWeight: 'bold',
+                      fontFamily:"Poppins-SemiBold",
                       color: '#838383',
                     }}>
                     No Description
@@ -323,7 +283,7 @@ class Buy extends Component {
                   <Text
                     style={{
                       fontSize: Size.medium,
-                      fontWeight: 'bold',
+                      fontFamily:"Poppins-SemiBold",
                       color: '#838383',
                       paddingHorizontal:30,
                       lineHeight:25,
@@ -332,21 +292,7 @@ class Buy extends Component {
                 </View>
               )
             ) : (
-              <View
-                style={{
-                  paddingTop: height / 20,
-                  alignSelf: 'center',
-                  paddingBottom: height / 20,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 'bold',
-                    color: '#838383',
-                  }}>
-                  No Reviews{' '}
-                </Text>
-              </View>
+             <Reviewscreen/>
             )}
 
             <View
@@ -354,7 +300,8 @@ class Buy extends Component {
                 backgroundColor:colors.Primary,
                 width:"99%",alignSelf:"center",paddingVertical:10,
               }}>
-              <Text style={{ fontWeight: 'bold', fontSize: Size.Primary, color:colors.white,textAlign:"center"
+              <Text style={{ fontFamily:"Poppins-SemiBold",
+ fontSize: Size.medium, color:colors.white,textAlign:"center"
 }}>
                 Related Products
               </Text>
@@ -362,7 +309,7 @@ class Buy extends Component {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              style={{width: width/1.1, height: height / 4,alignSelf:"center"}}>
+              style={{width: "98%",alignSelf:"center",marginTop:8}}>
               {data1.map((item, index) =>
                 item.name === Text1 ? null : (
                   <ProductComponent item={item}/>
@@ -456,12 +403,12 @@ class Buy extends Component {
             </View> */}
           </View>
         </ScrollView>
-        <View style={{flexDirection:"row",justifyContent:"space-evenly",padding:10,backgroundColor:colors.white}}>
+        <View style={{flexDirection:"row",justifyContent:"space-evenly",padding:10,backgroundColor:colors.white,borderTopWidth:1,borderTopColor:colors.Primary}}>
         <View style={{ left: width / 50,flexDirection:"column",justifyContent:"center",elevation:12}}>
               <Text
                 style={{
                   fontSize:Size.primarysize,
-                  fontWeight: 'bold',
+                  fontFamily:"Poppins-SemiBold",
                   color:colors.Primary
                 }}>
                 ${data[0].price} 
@@ -470,7 +417,7 @@ class Buy extends Component {
                 style={{
                   fontSize:Size.low,
                   textAlign:"center",
-                  fontWeight: 'bold',
+                  fontFamily:"Poppins-SemiBold",
                   color:colors.ash
                 }}>
                 {data[0].in_stock?"item in stock":"out of stock"} 
@@ -497,7 +444,7 @@ class Buy extends Component {
                   style={{
                     fontSize: Size.medium,
                     textAlign: 'center',
-                    fontWeight: 'bold',
+                    fontFamily:"Poppins-SemiBold",
                     color: '#fff',
                   }}>
                   ADD TO CART

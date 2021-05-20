@@ -30,7 +30,10 @@ const Registrationscreen = ({errorText, navigation, ...props}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1,backgroundColor: colors.white,
+    }}>
+            <ScrollView >
+
       <View
         style={{
           position: 'absolute',
@@ -42,28 +45,29 @@ const Registrationscreen = ({errorText, navigation, ...props}) => {
           borderBottomRightRadius: Radius.size,
         }}
       />
-      <View style={{ alignSelf:"center", }}>
-        <Text style={{fontWeight:"bold",color:colors.white,textAlign:"center",fontSize:Size.primarysize,marginTop:20}}>MARKETPLACE</Text>
+      <View style={{ alignSelf:"center", marginVertical:30}}>
+        <Text style={{fontFamily: 'Poppins-SemiBold',color:colors.white,textAlign:"center",fontSize:Size.primarysize,}}>MARKETPLACE</Text>
       {/* <Image resizeMode={"contain"}  style={{height:100,backgroundColor:colors.white,width:100,alignSelf:"center",marginTop:50,borderRadius:200}} source={require("../../assets/market.png") }/> */}
       </View>
-      <ScrollView style={{height: height}} contentContainerStyle={{flex:1}}>
         <View
-          style={{flex: 1, justifyContent: 'center', alignSelf:"center",width:"80%"}}>
+          style={{flex: 1, justifyContent: 'center', alignSelf:"center",width:"85%"}}>
           <View
             style={{
-              elevation: 10,
               backgroundColor: colors.white,
-
+borderWidth:1,borderColor:colors.Primary,
               // alignSelf: 'flex-end',
               padding:18,
               borderRadius: 40,
             }}>
-                          <Text style={{fontSize:25,fontWeight:"bold",alignSelf:"center",borderBottomColor:colors.Primary,borderBottomWidth:0,width:"100%",textAlign:"center"}}>Registration</Text>
+                          <Text style={{fontSize:25,fontFamily: 'Poppins-SemiBold',alignSelf:"center",borderBottomColor:colors.Primary,borderBottomWidth:0,width:"100%",textAlign:"center"}}>Registration</Text>
 
             <TextInput
-              placeholder={'Name'}
+              placeholder={'User Name'}
+              
               style={{
                 width:'100%',
+                fontFamily:"Poppins-ExtraLight",
+
                 paddingVertical:8,
                 paddingHorizontal:20,
                 borderRadius: Radius.Textbox,
@@ -78,6 +82,8 @@ const Registrationscreen = ({errorText, navigation, ...props}) => {
               placeholder={'Email'}
               style={{
                 width:'100%',
+                fontFamily:"Poppins-ExtraLight",
+
                 paddingVertical:8,
                 paddingHorizontal:20,
                 borderRadius: Radius.Textbox,
@@ -93,6 +99,8 @@ const Registrationscreen = ({errorText, navigation, ...props}) => {
               secureTextEntry={!hide1}
               style={{
                 width:'100%',
+                fontFamily:"Poppins-ExtraLight",
+
                 paddingVertical:8,
                 paddingHorizontal:20,
                 borderColor:colors.gray,
@@ -108,6 +116,8 @@ const Registrationscreen = ({errorText, navigation, ...props}) => {
               secureTextEntry={!hide}
               style={{
                 width:'100%',
+                fontFamily:"Poppins-ExtraLight",
+
                 paddingVertical:8,
                 paddingHorizontal:20,
                 borderColor:colors.gray,
@@ -173,16 +183,14 @@ const Registrationscreen = ({errorText, navigation, ...props}) => {
                 borderRadius: Radius.size,
                 marginTop: height / 40,
               }}>
-              <Text style={{textAlign: 'center',color:colors.light,}}>Register</Text>
+              <Text style={{textAlign: 'center',color:colors.light,fontFamily: 'Poppins-SemiBold'}}>Register</Text>
             </TouchableOpacity>
             <Text
               style={{
                 textAlign: 'center',
                 marginTop: height / 30,
-                fontWeight: 'bold',
-                left:width/20
-              }}>
-Already Have an Account ?<Text  onPress={()=>navigation.navigate("LoginScreen")} style={{                fontWeight: 'bold',color:colors.purple
+                fontFamily: 'Poppins-SemiBold',                left:width/30
+              }}>Already Have an Account ?<Text  onPress={()=>navigation.navigate("LoginScreen")} style={{               fontFamily: 'Poppins-SemiBold',color:colors.Primary
 }}> Login</Text>            </Text>
           </View>
         </View>

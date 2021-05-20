@@ -2,7 +2,7 @@ import React, { Component, useEffect } from "react";
 import { Text,View,StyleSheet,FlatList,TextInput,Image,ScrollView,TouchableOpacity,Dimensions} from "react-native";
 
 // import { connect } from 'react-redux'
-import BestsaleModel from './BestsaleModel'
+import BestsaleModel from '../../Components/ProductComponent'
 
   import { connect } from "react-redux";
   import {
@@ -12,7 +12,7 @@ import BestsaleModel from './BestsaleModel'
   
   import {colors,width,height,scale,verticalScale} from '../../Config/Theme';
 
-
+import HeaderwithoutMenu from "../../Components/HeaderwithoutMenu";
 class BestSale extends Component {
  
 
@@ -44,7 +44,7 @@ render() {
      const {route} = this.props;
 
      const Name = route.params.name
-     if(Name==='Bestsale'){
+     if(Name==='Best Sale Products'){
      var   data1 = this.props.products1.filter((item) => item.total_sales>=1).map(({id, name, price,parent,images,description,slug,categories}) => ({id, slug,name,categories,parent, price,images,description}));
      }else{
       var   data1 = this.props.products1.filter((item) => item.featured===true).map(({id, name, price,parent,images,description,slug,categories}) => ({id, slug,name,categories,parent, price,images,description}));
@@ -52,7 +52,9 @@ render() {
      }
      return(
       <View style={ styles.container }>
-      
+      <HeaderwithoutMenu item={{Title:Name}}/>
+      <View style={{marginVertical:4,flex:1,backgroundColor:colors.white,
+  justifyContent:'center',}}>
       <FlatList
         numColumns={2}
 
@@ -63,7 +65,7 @@ render() {
       />
         
     {/* {this.state.show?<ModelScreen/>:null} */}
-   
+   </View>
     </View>
   )
     
@@ -72,7 +74,6 @@ render() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: scale(25),
   },
   sectionTitle: {
     fontSize: 17,

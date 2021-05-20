@@ -13,7 +13,7 @@ const moderateScale = (size, factor = 0.5) =>
      Textbox:20,
  }
 const colors={
-    Primary:'#6f42c1',
+    Primary:'#4D4867',
 
    //Random colors 
     backgroundcolor:'rgba(115,149,160,255)',
@@ -31,7 +31,7 @@ Animationoverlay:"rgba(255,255,255,0.75)",
     violet:'#0cffe9',
     rose:'#ff7171',
     Hot:'#fe4545',
-    lightactivedotcolor:'rgba(228,255,252,255)',
+    lightactivedotcolor:'#0cffe9',
     //Colors
     blue: "#007bff",
     indigo: "#6610f2",
@@ -60,8 +60,8 @@ Textcolor1:"#808080"
 
 }
 const Size={
-    primarysize:15,
-    medium:12,
+    primarysize:20,
+    medium:15,
     low:10
 }
 

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {colors,width,height,scale,verticalScale} from '../../Config/Theme';
-
+import HeaderwithoutMenu from '../../Components/HeaderwithoutMenu'
 import { connect } from "react-redux";
 class WishListScreen extends Component {
   state = {
@@ -52,12 +52,8 @@ class WishListScreen extends Component {
   addCartHandler = (pro) => {
     let qty = 1;
     pro.quantity = qty;
-    //console.log(this.state.count);
     this.props.addToCart(pro);
     this.getItemsCount();
-    // this.props.itemsCount.itemsCount
-
-    // this.props.itemsCount.itemsCount
   };
   deleteFromCartHandler = (pro) => {
     this.props.deleteFromCart(pro);
@@ -117,7 +113,7 @@ class WishListScreen extends Component {
                   alignItems: "center",
                   padding: 10,
                   width: 135,
-                  backgroundColor:"rgba(115,149,160,255)",
+                  backgroundColor:colors.Primary,
                   borderRadius: 20,
 
 
@@ -154,12 +150,13 @@ class WishListScreen extends Component {
     console.log(this.props.wishListItems.wishListItems);
     if (!this.props.wishListItems.wishListItems.length) {
       return (
-        <View style={{ margin: 10, alignItems: "center" }}>
-          
+        <View style={{  }}>
+          <HeaderwithoutMenu item={{Title:"WishList"}}/>
           <View style={[styles.centerElement, { height: 450 }]}>
             <Image
               style={{
                 borderRadius: 20,
+                marginTop:60,
                 height: 200,
                 width: 260,
                 justifyContent: "center",
@@ -169,20 +166,21 @@ class WishListScreen extends Component {
               ></Image>
             <TouchableOpacity
               style={{
-                marginTop: 400,
+                marginTop: 300,
 
                 width: 150,
-                backgroundColor:"rgba(115,149,160,255)",                justifyContent: "center",
+                backgroundColor:colors.Primary,                justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
                 position: "absolute",
                 alignSelf: "center",
-                height: 35,
-                top: 10
+                height: 45,
+                borderRadius:5,
+                
               }}
               onPress={() => this.props.navigation.navigate("Homescreen")}
             >
-              <Text style={{  fontWeight: "bold",color:"#fff" }}>
+              <Text style={{  fontFamily:"Poppins-SemiBold" ,color:"#fff" }}>
                 Start Shopping
               </Text>
             </TouchableOpacity>

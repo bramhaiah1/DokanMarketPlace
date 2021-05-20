@@ -11,25 +11,45 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import {Login} from '../../Config/API'
 import {colors, width, height, scale, verticalScale,Radius,Size} from '../../Config/Theme';
+import AnimatedLoader from 'react-native-animated-loader';
 
 const LoginScreen = ({errorText, navigation, ...props}) => {
-  const [show, setshow] = React.useState(false);
-  const [visible, setVisible] = React.useState(true);
-  const [email, setEmail] = useState({value: '', error: ''});
-  const [password, setPassword] = useState({value: '', error: ''});
-  const [name, setName] = useState({value: '', error: ''});
-  //const [press, showPass] = useState(true);
-
+ 
+  const [email, setEmail] = useState('Rishiraj')
+  const [password, setPassword] = useState('Rishi2021?!');
+  const API_Call=()=>{
+    setHide1(true)
+    const fb = new FormData(); 
+    fb.append('username', email);
+    fb.append('password', password);
+   
+    Login(navigation,fb)
+  }
   const [hide, setHide] = React.useState(false);
+  const [hide1, setHide1] = React.useState(false);
 
   const _onSignUpPressed = async () => {
     navigation.navigate('product');
   };
 
   return (
-    <View style={{flex: 1}}>
+   hide1?<AnimatedLoader
+    visible={hide1}
+    overlayColor={colors.Animationoverlay}
+    source={require('../HomeScreen/animation.json')}
+    animationStyle={{
+      width: 100,
+      height: 100,
+    }}
+    speed={1}
+  />
+:
+   <View style={{flex: 1}}>
+       
+                
+      <ScrollView >
       <View
         style={{
           position: 'absolute',
@@ -43,9 +63,8 @@ const LoginScreen = ({errorText, navigation, ...props}) => {
       />
       <View style={{ alignSelf:"center", }}>
         {/* <Text style={{fontWeight:"bold",color:colors.white,textAlign:"center",fontSize:Size.primarysize,marginTop:70}}>MARKETPLACE</Text> */}
-      <Image resizeMode={"contain"}  style={{height:60,backgroundColor:colors.purple,width:200,alignSelf:"center",marginTop:50,borderRadius:200}} source={require("../../assets/attlogo.png") }/>
+      <Image resizeMode={"contain"}  style={{height:60,backgroundColor:colors.purple,width:200,alignSelf:"center",marginVertical:50,borderRadius:200}} source={require("../../assets/attlogo.png") }/>
       </View>
-      <ScrollView style={{height: height}} contentContainerStyle={{flex:1}}>
         <View
           style={{flex: 1, justifyContent: 'center', alignSelf:"center",width:"80%"}}>
           <View
@@ -58,13 +77,18 @@ const LoginScreen = ({errorText, navigation, ...props}) => {
               borderRadius: 40,
               marginBottom: 80,
             }}>
-                          <Text style={{fontSize:25,fontWeight:"bold",alignSelf:"center",borderBottomColor:colors.Primary,borderBottomWidth:0,width:"100%",textAlign:"center"}}>Login</Text>
+                          <Text style={{fontSize:25,fontFamily: 'Poppins-SemiBold',alignSelf:"center",borderBottomColor:colors.Primary,borderBottomWidth:0,width:"100%",textAlign:"center"}}>Login</Text>
 
             <TextInput
               placeholder={'User Name'}
+              placeholderTextColor={colors.Primary}
+              onChangeText={(text)=>setEmail(text)}
+              value={email}
               style={{
                 width:'100%',
                 paddingVertical:8,
+                fontFamily:"Poppins-ExtraLight",
+
                 paddingHorizontal:20,
                 borderRadius: Radius.Textbox,
                 borderWidth: 1,
@@ -76,12 +100,18 @@ const LoginScreen = ({errorText, navigation, ...props}) => {
             />
             <TextInput
               placeholder={'Password'}
+              
+              onChangeText={(text)=>setPassword(text)}
+              value={password}
               secureTextEntry={!hide}
+              placeholderTextColor={colors.Primary}
+
               style={{
                 width:'100%',
                 paddingVertical:8,
                 paddingHorizontal:20,
                 borderColor:colors.gray,
+                fontFamily:"Poppins-ExtraLight",
                                 borderRadius: Radius.Textbox,
                 borderWidth: 1,
                 alignSelf: 'center',
@@ -114,11 +144,12 @@ const LoginScreen = ({errorText, navigation, ...props}) => {
             <Text
               style={{
                 alignSelf: 'flex-end',
-                
+                fontFamily: 'Poppins-SemiBold'
               }}>
               ForgotPassword?
             </Text>
-            <TouchableOpacity 
+            <TouchableOpacity  
+            onPress={()=>API_Call()}
               style={{
                 justifyContent: 'center',
                 height: height / 20,
@@ -128,14 +159,13 @@ const LoginScreen = ({errorText, navigation, ...props}) => {
                 borderRadius: Radius.size,
                 marginTop: height / 40,
               }}>
-              <Text style={{textAlign: 'center',color:colors.light,}}>Login</Text>
+              <Text style={{textAlign: 'center',color:colors.light,fontFamily: 'Poppins-SemiBold'}}>Login</Text>
             </TouchableOpacity >
             <Text onPress={()=>navigation.navigate("Registrationscreen")}
               style={{
                 alignSelf: 'center',
                 marginTop: height / 30,
-                fontWeight: 'bold',
-              }}>
+                fontFamily: 'Poppins-SemiBold'              }}>
               Create an account
             </Text>
           </View>

@@ -23,27 +23,28 @@ return (  <View style={styles.view1}>
       onPress={() =>
         navigation.navigate('Products', {
             name: item.id,
+            category:item.name
           })
         
       }>
-        <View style={{height:100, overflow:'hidden',borderRadius:400/2}}>
+        <View style={{height:59,width:59, overflow:'hidden',borderRadius:400,backgroundColor:"#D3D3D3",borderWidth:1,borderColor:colors.ash, }}>
       <Image
         style={styles.image}
        // resizeMode={'stretch'}
         source={{uri: item.image.src}}
 
-      /></View>
-      <View style={{height: height / 15,}}>
+      />
+      </View>
+      {/* <View style={{height: height / 15,}}>
         <Text
           style={{
             textAlign: 'center',
             fontWeight: 'bold',
-            fontSize:Size.medium
+            fontSize:10
           }}>
-          {item.name}
         </Text>
        
-      </View>
+      </View> */}
     </TouchableOpacity>
   </View>     );
   }
@@ -53,15 +54,15 @@ return (  <View style={styles.view1}>
 
 const styles = StyleSheet.create({
   view1: {
-    alignSelf: 'center',
-    marginHorizontal:6,
- //   marginLeft: width / 20,
   //  marginRight: width / 20,
-    justifyContent: 'center',
-//    backgroundColor: colors.lightactivedotcolor,
-    height: height / 8,
-    width: width / 4,
+  flex:1,
+  alignSelf: 'center',
+  justifyContent:"space-between",
+  marginVertical:10,paddingBottom:10,
+   backgroundColor: colors.white,
+marginRight:8,
+
   },
-  image: { flex: 1,resizeMode: 'stretch'},
+  image: { flex: 1,resizeMode: 'cover'},
 })
 export default Categorycomponent

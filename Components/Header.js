@@ -33,13 +33,15 @@ const Header1=(props)=>{
 
    const { item } = props;
 //alert(JSON.stringify(item))
-return (  <Header style={{backgroundColor:  colors.white}}>
+return (  <Header style={{backgroundColor: colors.Primary,
+ 
+}}>
     <Left>
       <Entypo
         name="menu"
         size={35}
         onPress={() => navigation.openDrawer()}
-        style={{color: colors.Primary}}
+        style={{color: colors.white}}
       />
 
       {/* <Drawer navigationProps={this.props.navigation} /> */}
@@ -47,7 +49,7 @@ return (  <Header style={{backgroundColor:  colors.white}}>
     <Right>
       <Icon1
         onPress={() => navigation.navigate('Searchbar')}
-        style={{right: width / 10, color: colors.Primary}}
+        style={{right: width / 10, color: colors.white}}
         name="search"
         size={20}
       />
@@ -58,7 +60,7 @@ return (  <Header style={{backgroundColor:  colors.white}}>
       />
       <AntDesign
         onPress={() => navigation.navigate('CartScreen')}
-        style={{right: width / 20, color: colors.Primary}}
+        style={{right: width / 20, color: colors.white}}
         name="shoppingcart"
         size={20}
       />

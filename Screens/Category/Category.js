@@ -2,12 +2,12 @@ import React, { Component, useEffect } from "react";
 import { Text,View,StyleSheet,FlatList,TextInput,Image,ScrollView,TouchableOpacity,Dimensions} from "react-native";
 
 // import { connect } from 'react-redux'
-import CategoryModel from './CategoryModel'
+import CategoryModel from '../../Components/CategoryViewAllComponent'
 import { connect } from "react-redux";
 import { Category_APICall, getProducts1, searchProducts } from '../../Store/Actions/index'
 import {colors,width,height,scale,verticalScale} from '../../Config/Theme';
 
-
+import HeaderwithoutMenu from "../../Components/HeaderwithoutMenu";
 
 
 class Category extends Component {
@@ -47,18 +47,21 @@ render() {
 //alert(JSON.stringify(data1))
     return(
       <View style={ styles.container }>
-      
-      <FlatList
+              <HeaderwithoutMenu item={{Title:"Categories"}}/>
+              <ScrollView>
+              <View style={{marginHorizontal:3,marginBottom:80,}}>
+   <FlatList
         numColumns={2}
 
-       style={{ flexGrow: 0 }}
+       style={{ flexGrow: 0 ,}}
        data={ data1 }
        keyExtractor={ this._keyExtractor }
        renderItem={ this._renderItem }
       />
         
     {/* {this.state.show?<ModelScreen/>:null} */}
-   
+    </View>
+    </ScrollView>
     </View>
   )
     
@@ -66,8 +69,7 @@ render() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    margin: scale(25),
+    backgroundColor:colors.white
   },
   sectionTitle: {
     fontSize: 17,

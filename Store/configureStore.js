@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import uiReducer from './Reducers/ui';
 import productsReducer from "./Reducers/ProductsReducers";
 import productsReducer1 from "./Reducers/produc1reducer";
-
+import OrderReducer from "./Reducers/OrderReducer";
 import CartReducers from "./Reducers/CartReducers";
 const configureStore = () => {
     let composeEnhancers = compose;
@@ -16,6 +16,8 @@ const configureStore = () => {
         products1:productsReducer1,
         products: productsReducer,
         cartItems: CartReducers,
+        Order: OrderReducer,
+
         itemsCount: CartReducers,
         wishListItems: CartReducers,
         ui: uiReducer,

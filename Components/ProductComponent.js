@@ -18,7 +18,12 @@ const ProductComponent=(props)=>{
 
    const { item } = props;
 //alert(JSON.stringify(item))
-return (  <View style={styles.view1}>
+return ( 
+  <View style={{flex:0.5,backgroundColor:colors.white,justifyContent:"center",  alignSelf: 'center',marginVertical:8,paddingBottom:10,borderWidth:1,borderColor:"#D3D3D3",marginHorizontal:5,
+  overflow:'hidden',
+  alignContent:"center",
+  elevation:4,
+  }}>
     <TouchableOpacity
       onPress={() =>
         navigation.navigate('ProductBuy', {
@@ -26,26 +31,26 @@ return (  <View style={styles.view1}>
           name: item.name,
         })
       }>
-        <View style={{height:100, overflow:'hidden',}}>
+        <View style={{height:120,width:159,overflow:'hidden',alignSelf:"center",paddingVertical:5}}>
       <Image
         style={styles.image}
-       // resizeMode={'cover'}
         source={{uri: item.images[0].src}}
       /></View>
-      <View style={{height: height / 15,width:width/3}}>
+      <View style={{height: 70,width:width/3,left:7}}>
         <Text
           style={{
             textAlign: 'left',
-            fontWeight: 'bold',
-            fontSize:Size.medium
+            fontSize:12,
+            fontFamily:"Poppins-SemiBold"
           }}>
           {item.name}
         </Text>
         <Text
           style={{
             textAlign: 'left',
-            fontWeight: 'bold',
-            color:colors.ash,
+
+            fontFamily:"Poppins-SemiBold",
+                        color:colors.ash,
             fontSize:Size.low
           }}>
           {item.categories[0].name}
@@ -53,14 +58,15 @@ return (  <View style={styles.view1}>
         <Text
           style={{
             textAlign: 'left',
-            fontWeight: 'bold',
-            color:colors.purple
+            fontFamily:"Poppins-SemiBold",
+                        color:colors.Primary
           }}>
          $ {item.price}
         </Text>
       </View>
     </TouchableOpacity>
-  </View>     );
+  </View> 
+);
   }
 
 
@@ -69,14 +75,15 @@ return (  <View style={styles.view1}>
 const styles = StyleSheet.create({
   view1: {
     alignSelf: 'center',
-    marginHorizontal:6,
+    marginHorizontal:5,
  //   marginLeft: width / 20,
   //  marginRight: width / 20,
-    justifyContent: 'center',
+    overflow:'hidden',
 //    backgroundColor: colors.lightactivedotcolor,
-    height: height / 8,
-    width: width / 4,
+    elevation:4,
+    backgroundColor:colors.cement,
+    width:100,
   },
-  image: {    flex: 1,resizeMode: 'stretch'},
+  image: {    flex: 1,resizeMode: 'cover',height:"100%",width:"100%"},
 })
 export default ProductComponent
